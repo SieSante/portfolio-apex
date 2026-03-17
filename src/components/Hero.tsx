@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 const reveal = {
   initial: { clipPath: "inset(100% 0% 0% 0%)", y: 40 },
   animate: { clipPath: "inset(0% 0% 0% 0%)", y: 0 },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
 };
 
 const Hero = () => {
@@ -21,14 +22,14 @@ const Hero = () => {
         <motion.h1
           className="display-heading text-[clamp(3rem,12vw,10rem)] text-foreground"
           {...reveal}
-          transition={{ ...reveal.transition, delay: 0.4 }}
+          transition={{ duration: 0.8, ease, delay: 0.4 }}
         >
           Shiburi
         </motion.h1>
         <motion.h1
           className="display-heading text-[clamp(3rem,12vw,10rem)] text-foreground"
           {...reveal}
-          transition={{ ...reveal.transition, delay: 0.55 }}
+          transition={{ duration: 0.8, ease, delay: 0.55 }}
         >
           Simon<span className="text-accent">.</span>
         </motion.h1>
@@ -36,7 +37,7 @@ const Hero = () => {
           className="mt-8 max-w-lg text-muted-foreground font-body tracking-tight leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ delay: 0.9, duration: 0.6, ease }}
         >
           Building digital systems that bridge users and technology.
         </motion.p>
