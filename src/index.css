@@ -6,52 +6,35 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 4%;
+    --background: 0 0% 99%;
+    --foreground: 240 10% 6%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 4%;
+    --card-foreground: 240 10% 6%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 4%;
+    --primary: 240 10% 6%;
+    --primary-foreground: 0 0% 100%;
 
-    --primary: 240 10% 4%;
-    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 240 10% 6%;
 
-    --secondary: 0 0% 92%;
-    --secondary-foreground: 240 10% 4%;
-
-    --muted: 0 0% 92%;
+    --muted: 0 0% 94%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 20 100% 50%;
+    --accent: 16 90% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --border: 240 6% 88%;
+    --ring: 240 10% 6%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 4%;
+    --radius: 0.75rem;
 
-    --radius: 0rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
-    /* Custom tokens */
     --font-display: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
 
-    --spring-hover: scale(1.02) translateY(-4px);
-    --shadow-nav: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+    --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.08);
+    --shadow-hover: 0 20px 40px -15px rgba(0,0,0,0.15);
   }
 }
 
@@ -60,53 +43,63 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4 {
     font-family: var(--font-display);
   }
 }
 
 @layer components {
+
   .meta-text {
     font-family: var(--font-mono);
-    @apply text-xs uppercase tracking-[0.15em] text-muted-foreground font-medium;
+    @apply text-xs uppercase tracking-[0.18em] text-muted-foreground font-medium;
   }
 
   .display-heading {
-    font-family: var(--font-display);
-    @apply font-semibold tracking-tighter leading-none;
+    @apply font-semibold tracking-tight leading-[0.95];
   }
 
   .section-spacing {
-    @apply py-[12vh] md:py-[16vh] lg:py-[20vh];
+    @apply py-[14vh] md:py-[18vh] lg:py-[20vh];
   }
 
+  /* 🔥 SMART FLOATING NAV (we will control behavior in JS) */
   .nav-pill {
-    @apply fixed bottom-8 left-1/2 -translate-x-1/2 z-50 px-2 py-2 rounded-full;
-    backdrop-filter: blur(12px);
-    background: hsla(0, 0%, 100%, 0.7);
-    box-shadow: var(--shadow-nav);
+    @apply fixed bottom-8 left-1/2 -translate-x-1/2 z-50 px-3 py-2 rounded-full transition-all duration-300;
+    backdrop-filter: blur(14px);
+    background: rgba(255,255,255,0.75);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .nav-pill.top {
+    @apply top-6 bottom-auto;
   }
 
   .project-card {
-    @apply relative overflow-hidden cursor-pointer;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    @apply relative overflow-hidden rounded-2xl bg-card border border-border;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .project-card:hover {
-    transform: var(--spring-hover);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: var(--shadow-hover);
   }
 
   .archive-row {
-    @apply flex items-center justify-between py-5 border-b border-border cursor-pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    @apply flex items-center justify-between py-6 border-b border-border cursor-pointer;
+    transition: all 0.3s ease;
   }
 
   .archive-row:hover {
-    @apply pl-4 text-accent;
+    @apply pl-6 text-accent;
   }
 }

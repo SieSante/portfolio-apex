@@ -1,23 +1,45 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const navItems = [
-  { label: "Works", href: "#works" },
+  { label: "Work", href: "#works" },
   { label: "About", href: "#about" },
-  { label: "Archive", href: "#archive" },
-  { label: "Inquiry", href: "#contact" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const Navigation = () => {
+  const [atFooter, setAtFooter] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const footer = document.querySelector("footer");
+      if (!footer) return;
+
+      const rect = footer.getBoundingClientRect();
+
+      // Detect footer visibility
+      setAtFooter(rect.top < window.innerHeight - 80);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <motion.nav
-      className="nav-pill"
+      className={`nav-pill ${atFooter ? "top" : ""}`}
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 1.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="flex items-center gap-1">
-        <span className="meta-text px-4 py-2">SS</span>
+        
+        {/* Logo / Initials */}
+        <span className="meta-text px-4 py-2">SS.</span>
+
         <div className="h-4 w-px bg-border" />
+
+        {/* Links */}
         {navItems.map((item) => (
           <a
             key={item.label}
@@ -27,6 +49,15 @@ const Navigation = () => {
             {item.label}
           </a>
         ))}
+
+        {/* Hire Me (same as your screenshot) */}
+        <a
+          href="#contact"
+          className="ml-2 px-4 py-2 text-sm font-medium bg-foreground text-background rounded-full"
+        >
+          Hire Me
+        </a>
+
       </div>
     </motion.nav>
   );
